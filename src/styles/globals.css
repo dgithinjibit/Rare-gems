@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --maasai-red: #E31B23;
+  --maasai-blue: #0057B8;
+  --maasai-ochre: #CC7722;
+  --maasai-white: #F5F5DC;
+  --earth-brown: #8B4513;
+  --earth-dark: #3D2914;
+  --earth-light: #6B4423;
+  --savanna-grass: #228B22;
+  --savanna-sky: #87CEEB;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--earth-dark);
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--earth-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--maasai-ochre);
+  border-radius: 4px;
+}
+
+/* Maasai pattern border utility */
+.maasai-border {
+  border: 4px solid var(--maasai-red);
+  box-shadow: 
+    inset 0 0 0 2px var(--maasai-white),
+    inset 0 0 0 4px var(--maasai-blue);
+}
+
+/* Tire bar animations */
+@keyframes pulse-warning {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.tire-warning {
+  animation: pulse-warning 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.screen-shake {
+  animation: shake 0.1s ease-in-out;
+}
