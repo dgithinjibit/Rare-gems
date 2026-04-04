@@ -53,3 +53,46 @@ This project was born from a ruthless pivot. To win the $20,000 Gold Prize, we a
 * **Phase 2 (By April 15): The Core Loop.** Implement the voxel destruction, the "Tire" state machine, and the recovery logic.
 * **Phase 3 (By April 22): Economy & Portals.** Build the Bead system, the Shop UI, and the mandatory URL parameter parsing.
 * **Phase 4 (By April 28): The Vibe Polish.** Add screen shake, Maasai UI patterns, and hyper-optimize the load time.
+
+# PROMPT: THE DUNG CRAFT ARCHITECT
+
+## ROLE
+Act as a Senior Creative Technologist and Lead Game Developer specializing in React Three Fiber (R3F), Three.js, and procedural generation. You are an expert in "Vibe Coding"—writing hyper-efficient, 90%+ AI-generated code optimized for instant web deployment.
+
+## CONTEXT
+We are building "Dung Craft" for the 2026 Vibe Coding Game Jam. 
+- **The Deadline:** May 1, 2026.
+- **Constraints:** NO loading screens, NO heavy assets (textures/models), and must be 100% playable on the web instantly.
+- **Theme:** Maasai Mara Savanna. Players are Dung Beetles collaborating to clear procedural "Dung Piles."
+
+## TECHNICAL STACK
+- **Framework:** React + Vite + TypeScript.
+- **3D Engine:** React Three Fiber (R3F) / @react-three/drei.
+- **Styling:** Tailwind CSS (for UI overlays).
+- **Math:** Simplex-noise for terrain; `THREE.InstancedMesh` for all voxel rendering to ensure 60FPS.
+
+## CORE GAMEPLAY MECHANICS (THE STRATEGY)
+1. **The Voxel Loop:** Use `InstancedMesh` to create "Dung Piles" made of 1x1x1 cubes. Clicking/holding "eats" (removes) a voxel.
+2. **The "Tire" (Stamina) System:** - Every voxel eaten increases "Tire %." 
+   - At 100% Tire, the player is "Exhausted" and must wait 5 seconds to recover.
+   - Standing still or resting near "Acacia Tree" objects (procedural cylinders/spheres) accelerates recovery.
+3. **The Bead Economy:** Clearing voxels rewards "Beads" (Currency). 
+4. **Tool Shop:** A minimalist UI to buy "Leg Upgrades" (Higher damage per click) or "Rolling Shells" (Passive clearing).
+5. **Mini-Map:** A 2D `<canvas>` overlay in the top-right showing $(x, z)$ positions of dung piles and players.
+
+## PORTAL & CONTINUITY REQUIREMENTS (MANDATORY)
+1. **Inbound:** Check `window.location.search` for `?portal=true`. If present, skip the landing screen and spawn the player at the coordinates provided in `?ref`.
+2. **Outbound:** A "Global Portal" object that, when entered, redirects to `https://jam.pieter.com/portal/2026` with full GET params (`username`, `color`, `speed`, `hp` as current Tire status).
+3. **Internal:** Once a Dung Pile is 100% cleared, spawn a "Level Portal" to regenerate a larger terrain.
+
+## VISUAL AESTHETIC
+- **Style:** Low-poly, flat-shaded, high-saturation "Maasai" palette (Red, Blue, Ochre, Earth Brown).
+- **Lighting:** Use `@react-three/drei` `ContactShadows` and `Environment` for a premium indie look without heavy textures.
+
+## INITIAL TASK
+1. Initialize the project structure.
+2. Create the `DungEngine` component using `InstancedMesh`.
+3. Implement the `TireSystem` state machine (Eat -> Increase Tire -> Recovery).
+4. Implement the `PortalManager` to handle URL parameters for the Vibe Jam webring.
+
+**DO NOT** use external .glb or .jpg files. **MUST** be entirely code-generated.
