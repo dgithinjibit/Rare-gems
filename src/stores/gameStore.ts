@@ -1,18 +1,9 @@
 import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
-import type { BeetleSpecies, TireType } from '../systems/BeetleTireSystem'
+import type { BeetleSpecies, TireType, TireState, Upgrade } from '../types/game'
 
-// Tire states following the state machine pattern
-export type TireState = 'ACTIVE' | 'FATIGUED' | 'EXHAUSTED' | 'RECOVERING'
-
-export interface Upgrade {
-  id: string
-  name: string
-  description: string
-  cost: number
-  effect: string
-  purchased: boolean
-}
+// Re-export types for backwards compatibility
+export type { TireState, Upgrade, BeetleSpecies, TireType } from '../types/game'
 
 export interface GameState {
   // Game phase

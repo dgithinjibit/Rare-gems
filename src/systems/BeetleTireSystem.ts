@@ -13,21 +13,13 @@
  * - Sustainability aspects
  */
 
-import { useGameStore, type TireState } from '../stores/gameStore'
+import { useGameStore } from '../stores/gameStore'
 import { useWorldStore } from '../stores/worldStore'
 import { distance2D, lerp, clamp } from '../utils/math'
+import type { BeetleSpecies, TireType, TireState } from '../types/game'
 
-// ============================================================================
-// BEETLE SPECIES DEFINITIONS
-// ============================================================================
-
-export type BeetleSpecies = 
-  | 'scarab'           // Balanced all-rounder
-  | 'dung_roller'      // Speed specialist
-  | 'rhino_beetle'     // Tank/strength
-  | 'jewel_beetle'     // Agility specialist
-  | 'stag_beetle'      // Combat/defense
-  | 'goliath'          // Heavy duty
+// Re-export types for external use
+export type { BeetleSpecies, TireType, TireState } from '../types/game'
 
 export interface BeetleProfile {
   species: BeetleSpecies
@@ -141,24 +133,8 @@ export const BEETLE_PROFILES: Record<BeetleSpecies, BeetleProfile> = {
 }
 
 // ============================================================================
-// TIRE TYPE DEFINITIONS
+// TIRE TREAD AND COMPOSITION TYPES
 // ============================================================================
-
-export type TireType = 
-  | 'standard'
-  | 'speed_tread'
-  | 'heavy_duty'
-  | 'all_terrain'
-  | 'mud_terrain'
-  | 'sand_runner'
-  | 'precision'
-  | 'lightweight'
-  | 'reinforced'
-  | 'armored'
-  | 'adaptive'
-  | 'eco_chitin'
-  | 'sensor_array'
-  | 'industrial'
 
 export type TreadPattern = 
   | 'symmetric'      // Balanced performance
