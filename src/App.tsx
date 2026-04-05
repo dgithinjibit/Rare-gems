@@ -271,10 +271,10 @@ function DungPile() {
   }, [voxels, dummy, colors])
   
   // Click handler - eat voxels
-  const handleClick = useCallback((e: THREE.Event) => {
+  const handleClick = useCallback((e: { instanceId?: number }) => {
     if (isExhausted) return
     
-    const instanceId = (e as any).instanceId
+    const instanceId = e.instanceId
     if (instanceId === undefined) return
     
     const activeVoxels = voxels.filter(v => v.active)
@@ -310,7 +310,7 @@ function DungPile() {
     <instancedMesh
       ref={meshRef}
       args={[undefined, undefined, 200]}
-      onClick={handleClick}
+      onClick={(e) => handleClick({ instanceId: e.instanceId })}
       castShadow
       receiveShadow
     >
@@ -843,8 +843,11 @@ export default function App() {
   const setGameStarted = useGameStore((s) => s.setGameStarted)
   const initVoxels = useGameStore((s) => s.initVoxels)
   
+  console.log("[v0] App mounted, gameStarted:", gameStarted)
+  
   // Vibe Jam compliance - load widget and check portal param
   useEffect(() => {
+    console.log("[v0] useEffect running - checking portal params")
     // Load Vibe Jam widget
     const script = document.createElement('script')
     script.src = 'https://jam.pieter.com/2026/widget.js'
@@ -864,12 +867,12 @@ export default function App() {
   }, [initVoxels, setGameStarted])
   
   return (
-    <div className="w-full h-full relative bg-[#3D2914]">
+    <div className="fixed inset-0 bg-[#3D2914]">
       {/* 3D Canvas */}
       <Canvas
         camera={{ position: [0, 12, 18], fov: 50 }}
         shadows
-        className="w-full h-full touch-none"
+        style={{ width: '100%', height: '100%', touchAction: 'none' }}
         dpr={[1, 2]}
       >
         <Suspense fallback={null}>
@@ -882,8 +885,8 @@ export default function App() {
           <GameLogic />
         </Suspense>
         
-        {/* Performance Stats */}
-        <Stats className="!absolute !left-auto !right-4 !bottom-4" />
+        {/* Performance Stats - positioned by drei */}
+        <Stats />
       </Canvas>
       
       {/* UI Layer */}
