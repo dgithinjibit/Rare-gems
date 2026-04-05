@@ -843,11 +843,8 @@ export default function App() {
   const setGameStarted = useGameStore((s) => s.setGameStarted)
   const initVoxels = useGameStore((s) => s.initVoxels)
   
-  console.log("[v0] App mounted, gameStarted:", gameStarted)
-  
-  // Vibe Jam compliance - load widget and check portal param
+// Vibe Jam compliance - load widget and check portal param
   useEffect(() => {
-    console.log("[v0] useEffect running - checking portal params")
     // Load Vibe Jam widget
     const script = document.createElement('script')
     script.src = 'https://jam.pieter.com/2026/widget.js'
