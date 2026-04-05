@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --maasai-red: #E31B23;
-  --maasai-blue: #0057B8;
+  /* Vibe Jam Required Palette */
+  --maasai-red: #FF0000;
+  --maasai-blue: #0000FF;
   --maasai-ochre: #CC7722;
   --maasai-white: #F5F5DC;
   --earth-brown: #8B4513;

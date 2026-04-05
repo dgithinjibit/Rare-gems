@@ -1,8 +1,9 @@
 // Maasai-inspired color palette for Dung Craft
+// Vibe Jam Required: Red (#FF0000), Blue (#0000FF), Earthy Ochre
 export const COLORS = {
-  // Maasai traditional colors
-  maasaiRed: '#E31B23',
-  maasaiBlue: '#0057B8',
+  // Maasai traditional colors - VIBE JAM PALETTE
+  maasaiRed: '#FF0000',
+  maasaiBlue: '#0000FF',
   maasaiOchre: '#CC7722',
   ochre: '#CC7722',
   beadWhite: '#F5F5DC',

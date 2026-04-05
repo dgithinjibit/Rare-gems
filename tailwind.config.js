@@ -8,8 +8,8 @@ export default {
     extend: {
       colors: {
         maasai: {
-          red: '#E31B23',
-          blue: '#0057B8',
+          red: '#FF0000',  // Vibe Jam Red
+          blue: '#0000FF', // Vibe Jam Blue
           ochre: '#CC7722',
           white: '#F5F5DC',
         },
