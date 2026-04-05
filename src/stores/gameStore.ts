@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
+import type { BeetleSpecies, TireType } from '../systems/BeetleTireSystem'
 
 // Tire states following the state machine pattern
 export type TireState = 'ACTIVE' | 'FATIGUED' | 'EXHAUSTED' | 'RECOVERING'
@@ -15,7 +16,7 @@ export interface Upgrade {
 
 export interface GameState {
   // Game phase
-  gamePhase: 'menu' | 'playing' | 'paused' | 'exhausted'
+  gamePhase: 'menu' | 'playing' | 'paused' | 'exhausted' | 'beetle_select'
   
   // Player stats
   tire: number // 0-100 percentage
@@ -23,6 +24,13 @@ export interface GameState {
   beads: number
   combo: number
   comboTimer: number
+  
+  // Beetle and Tire selection
+  selectedBeetle: BeetleSpecies
+  equippedTire: TireType
+  tireWear: number // 0-100 (100 = new)
+  unlockedBeetles: BeetleSpecies[]
+  unlockedTires: TireType[]
   
   // Upgrades
   upgrades: Upgrade[]
@@ -58,6 +66,14 @@ export interface GameState {
   nextLevel: () => void
   setPlayerPosition: (pos: [number, number, number]) => void
   resetGame: () => void
+  
+  // Beetle and Tire actions
+  selectBeetle: (species: BeetleSpecies) => void
+  equipTire: (tire: TireType) => void
+  applyTireWear: (amount: number) => void
+  unlockBeetle: (species: BeetleSpecies) => void
+  unlockTire: (tire: TireType) => void
+  repairTire: () => void
 }
 
 // Default upgrades available in the shop
@@ -121,6 +137,14 @@ export const useGameStore = create<GameState>()(
     beads: 0,
     combo: 0,
     comboTimer: 0,
+    
+    // Beetle and Tire initial state
+    selectedBeetle: 'scarab' as BeetleSpecies,
+    equippedTire: 'standard' as TireType,
+    tireWear: 100,
+    unlockedBeetles: ['scarab'] as BeetleSpecies[],
+    unlockedTires: ['standard', 'eco_chitin'] as TireType[],
+    
     upgrades: DEFAULT_UPGRADES,
     currentLevel: 1,
     dungPilesCleared: 0,
@@ -264,7 +288,49 @@ export const useGameStore = create<GameState>()(
       dungPilesCleared: 0,
       totalDungPilesInLevel: 5,
       playerPosition: [0, 0.5, 0],
+      tireWear: 100,
     }),
+    
+    // Beetle and Tire actions
+    selectBeetle: (species) => {
+      const state = get()
+      if (state.unlockedBeetles.includes(species)) {
+        set({ selectedBeetle: species })
+      }
+    },
+    
+    equipTire: (tire) => {
+      const state = get()
+      if (state.unlockedTires.includes(tire)) {
+        set({ equippedTire: tire, tireWear: 100 })
+      }
+    },
+    
+    applyTireWear: (amount) => {
+      set((state) => ({
+        tireWear: Math.max(0, state.tireWear - amount),
+      }))
+    },
+    
+    unlockBeetle: (species) => {
+      set((state) => ({
+        unlockedBeetles: state.unlockedBeetles.includes(species)
+          ? state.unlockedBeetles
+          : [...state.unlockedBeetles, species],
+      }))
+    },
+    
+    unlockTire: (tire) => {
+      set((state) => ({
+        unlockedTires: state.unlockedTires.includes(tire)
+          ? state.unlockedTires
+          : [...state.unlockedTires, tire],
+      }))
+    },
+    
+    repairTire: () => {
+      set({ tireWear: 100 })
+    },
   }))
 )
 
